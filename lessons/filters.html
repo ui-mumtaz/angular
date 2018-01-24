@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Promise fun</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+        <script>
+function TestCtrl() {
+  // basic controller where we preset the scope myString variable
+  var self = this;
+  self.myString = "hello world";
+}
+
+// this is where the filter magic happens.
+function CapitalizeFilter() {
+  // this is the function that Angular will execute when the expression is evaluated
+  return function (text) {
+    // text is the original string output of the Angular expression
+    return text.toUpperCase();
+    // and we simply return the text in upper case!
+  }
+}
+
+angular.module('app', [])
+.controller('TestCtrl', TestCtrl)
+// define a filter called 'capitalize' that will invoke the CapitalizeFilter function
+.filter('capitalize', CapitalizeFilter);
+</script>
+    </head>
+    <body ng-app="app" ng-controller="TestCtrl as test">
+        <input type="text" ng-model="test.myString" />
+        <h2>
+              {{ test.myString | capitalize }}
+          </h2>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Promise fun</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+        <script>
+function getData($timeout, $q) {
+  return function() {
+    // simulated async function
+    return $q(function(resolve, reject) {
+      $timeout(function() {
+        resolve(Math.floor(Math.random() * 10))
+        }, 2000)
+    })
+  }
+}
+
+angular.module('app', [])
+.factory('getData', getData)
+.run(function(getData) {
+  var promise = getData()
+    .then(function(num) {
+      console.log(num)
+      return num * 2;
+    }, function(error) {
+      console.error(error)
+    }).then(function(string) {
+        console.log(string)
+    })
+  promise.finally(function() {
+    console.log("Finished at: " +  new Date)
+    })
+})
+</script>
+    </head>
+    <body ng-app="app">
+    </body>
+</html>

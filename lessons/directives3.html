@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Directives</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+<style>
+   .activeClass {
+    background-color: red;
+}
+</style>
+    <script>
+angular.module('greetings', [])
+.directive("welcome", function() {
+  return {
+    restrict: "E",
+    scope: {},
+    controller: function($scope) {
+      $scope.words = [];
+
+      this.sayHello = function() {
+        $scope.words.push("hello");
+      };
+
+      this.sayHowdy = function() {
+        $scope.words.push("howdy");
+      };
+
+      this.sayHi = function() {
+        $scope.words.push("hi");
+      };
+    },
+
+    link: function(scope, element){
+      element.bind("mouseenter", function() {
+        console.log(scope.words);
+      });
+    }
+  }
+})
+
+.directive("hello", function() {
+  return {
+    require: "welcome",
+    link: function (scope, element, attrs, welcomeCtrl) {
+      welcomeCtrl.sayHowdy();
+    }
+  };
+ })
+
+.directive("howdy", function() {
+  return {
+    require: "welcome",
+    link: function (scope, element, attrs, welcomeCtrl) {
+      welcomeCtrl.sayHowdy();
+    }
+  };
+ })
+
+.directive("hi", function() {
+  return {
+    require: "welcome",
+    link: function (scope, element, attrs, welcomeCtrl) {
+      welcomeCtrl.sayHi();
+    }
+  };
+ });
+    </script>
+    </head>
+<body ng-app="greetings">
+  <welcome hello howdy>Say something!</welcome>
+  <welcome hi>Only Hi!</welcome>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Directive</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular-route.min.js"></script>
+<script>
+angular.module('myApp', ['ngRoute'])
+
+.config(function($routeProvider){
+  $routeProvider.when("/:firstName/:middleName",
+    {
+      template: "<h1>{{app.message}}</h1>",
+      controller: "AppCtrl",
+      controllerAs: "app",
+      resolve: {
+        app: function ($q, $timeout) {
+          var defer = $q.defer();
+          $timeout(function () {
+            defer.resolve(); 
+          console.log("did it");
+          }, 2000);
+          return defer.promise;
+        }
+      }
+    }
+  )
+  .when('/cookies',
+    {
+      template: "NOM NOM NOM NOM"
+    }
+  )
+  .otherwise({
+    template: "This route isn't set!"
+  });
+})
+
+.controller('AppCtrl', function($routeParams) {
+  var self = this;
+  self.message = $routeParams.firstName;
+});
+</script>
+  </head>
+<body ng-app="myApp">
+  <ng-view>
+
+<h1>{{ app.message }}</h1>
+
+</ng-view>
+</body>
+</html>

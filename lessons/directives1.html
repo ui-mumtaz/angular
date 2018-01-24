@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Directives</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+<style>
+   .activeClass {
+    background-color: red;
+}
+</style>
+        <script>
+angular.module('greetings', [])
+.directive("welcome", function() {
+  return {
+    restrict: "C",
+    template: "<div>Howdy there! You look splendid.</div>"
+  }
+})
+
+.directive("entering", function() {
+    return function(scope, element, attrs) {
+        element.bind("mouseenter", function() {
+            //console.log(attrs);
+            element.addClass(attrs.entering);
+            console.log("mouse has entered! :)");
+        })
+    }
+})
+
+.directive("goodbye", function() {
+    return {
+        restrict: "A",
+        link: function() {
+            console.log("See ya later");
+        }
+    }
+});
+
+
+</script>
+    </head>
+<body ng-app="greetings">
+    <div class="welcome" entering="activeClass" goodbye></div>
+</body>
+</html>

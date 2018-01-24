@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Promise fun</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+        <script>
+function TestCtrl() {
+  var self = this;
+    self.people = [
+      {
+        name: "Eric Simons",
+        born: "Chicago"
+      },
+      {
+        name: "Albert Pai",
+        born: "Taiwan"
+      },
+      {
+        name: "Matthew Greenster",
+        born: "Virginia"
+      }
+    ];
+}
+
+angular.module('app', [])
+.controller('TestCtrl', TestCtrl);
+</script>
+    </head>
+<body ng-app="app" ng-controller="TestCtrl as test">
+  <input type="text" ng-model="search.$" />
+
+  <p ng-repeat="person in test.people | filter: search | limitTo:2 | orderBy: 'born'">
+    {{ person.name }}
+  </p>
+</body>
+</html>
